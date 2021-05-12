@@ -1,6 +1,18 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
+/*
+    Beispiel:
+
+    ( 0  3  6 )
+    ( 1  4  7 )
+    ( 2  5  8 )
+
+    ( a0  b0  c0 )
+    ( a1  b1  c1 )
+    ( a2  b2  c2 )
+
+*/
 public class Matrixmultiplikator
 {
     public Matrixmultiplikator(int nGrad, int nExp, int nCell) {

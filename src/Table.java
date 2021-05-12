@@ -3,6 +3,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.*;
 
 public class Table {
     private JFrame frame;
@@ -17,6 +18,20 @@ public class Table {
     public void displayCellTable(String[][] daten, String[] columns, int highest)
     {
         JTable table = new JTable(new MyTableModel(daten, columns));
+
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                int row = table.rowAtPoint(evt.getPoint());
+                int col = table.columnAtPoint(evt.getPoint());
+                int content = Integer.parseInt( (String) table.getModel().getValueAt(row, col));
+                System.out.println("Content: " + content);
+                content--;
+                System.out.println("Neuer Content: " + content);
+                table.getModel().setValueAt(String.valueOf(content), row, col);
+            }
+        });
+
         JScrollPane sp = new JScrollPane(table);    
         colorize(table, highest);
         frame.getContentPane().add(sp);
@@ -55,26 +70,42 @@ public class Table {
     
         private Object[][] data;
 
-        public MyTableModel(String[][] data, String[] columns)
+        public MyTableModel(Object[][] data, String[] columns)
         {
             this.data = data;
             columnNames = columns;
         }
-    
+        
+        @Override
         public int getColumnCount() {
           return columnNames.length;
         }
-    
+        
+        @Override
         public int getRowCount() {
           return data.length;
         }
     
+        @Override
         public String getColumnName(int col) {
           return columnNames[col];
         }
     
+        @Override
         public Object getValueAt(int row, int col) {
           return data[row][col];
+        }
+
+        @Override
+        public void setValueAt(Object value, int row, int col) {
+            Integer i = Integer.parseInt((String) value);
+            if (i < 0)
+            {
+                i = 0;
+            }
+            data[row][col] = i;
+
+            fireTableCellUpdated(row, col);
         }
     }
 }
