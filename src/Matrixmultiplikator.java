@@ -18,7 +18,7 @@ public class Matrixmultiplikator
     public Matrixmultiplikator(int nGrad, int nExp, int nCell) {
 
         Matrix ergebnis = multiplizieren(nGrad, nExp);
-        String[][] cellContent = ergebnis.getCellTable(nCell);
+        Integer[][] cellContent = ergebnis.getCellTable(nCell);
         int highest = getHighest(cellContent);
         String[] columns = ergebnis.getColumns();
 
@@ -102,16 +102,16 @@ public class Matrixmultiplikator
         
     }
 
-    public int getHighest(String[][] s)
+    public int getHighest(Integer[][] s)
     {
         int highest = 0;
-        for (String[] a : s)
+        for (Integer[] a : s)
         {
-            for (String i : a)
+            for (Integer i : a)
             {
-                if (Integer.parseInt(i) > highest)
+                if (i > highest)
                 {
-                    highest = Integer.parseInt(i);
+                    highest = i;
                 }
             }
         }

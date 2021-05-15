@@ -29,12 +29,12 @@ public class Matrix {
         }
     }
 
-    public String[][] getCellTable(int pos)
+    public Integer[][] getCellTable(int pos)
     {
         Zelle z = content[pos];
         ArrayList<ArrayList<Integer>> c = z.getContent();
 
-        String[][] tableData = new String[c.size()][größe];
+        Integer[][] tableData = new Integer[c.size()][größe];
 
         for (int k = 0; k < tableData.length; k++)
         {
@@ -42,14 +42,12 @@ public class Matrix {
 
             for (int i = 0; i < größe;i++)
             {
-                tableData[k][i] = "0";
+                tableData[k][i] = 0;
             }
 
             for (int x : src)
             {
-                int current = Integer.parseInt(tableData[k][x]);
-                current++;
-                tableData[k][x] = String.valueOf(current);
+                tableData[k][x]++;
             }
 
         }

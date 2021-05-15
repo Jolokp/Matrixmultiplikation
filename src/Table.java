@@ -15,7 +15,7 @@ public class Table {
         frame.setVisible(true);
     }
 
-    public void displayCellTable(String[][] daten, String[] columns, int highest)
+    public void displayCellTable(Integer[][] daten, String[] columns, int highest)
     {
         JTable table = new JTable(new MyTableModel(daten, columns));
 
@@ -24,11 +24,14 @@ public class Table {
             public void mouseClicked(MouseEvent evt) {
                 int row = table.rowAtPoint(evt.getPoint());
                 int col = table.columnAtPoint(evt.getPoint());
-                int content = Integer.parseInt( (String) table.getModel().getValueAt(row, col));
-                System.out.println("Content: " + content);
+                int content = (Integer) (table.getModel().getValueAt(row, col));
                 content--;
-                System.out.println("Neuer Content: " + content);
-                table.getModel().setValueAt(String.valueOf(content), row, col);
+                
+                if (content < 0)
+                {
+                    content = 0;
+                }
+                table.getModel().setValueAt(content, row, col);
             }
         });
 
@@ -58,7 +61,7 @@ public class Table {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            int i = (divisor - Integer.parseInt((String) table.getValueAt(row, column))) * factor;
+            int i = (divisor - (Integer) table.getValueAt(row, column)) * factor;
             setBackground(new Color(i, i, i));
 
             return this;
@@ -98,12 +101,7 @@ public class Table {
 
         @Override
         public void setValueAt(Object value, int row, int col) {
-            Integer i = Integer.parseInt((String) value);
-            if (i < 0)
-            {
-                i = 0;
-            }
-            data[row][col] = i;
+            data[row][col] = value;
 
             fireTableCellUpdated(row, col);
         }
