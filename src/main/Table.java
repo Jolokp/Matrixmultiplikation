@@ -1,9 +1,11 @@
+package main;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.*;
+import java.net.URL;
 
 public class Table {
     private JFrame frame;
@@ -11,6 +13,11 @@ public class Table {
     public Table()
     {
         frame = new JFrame("Tabelle");
+
+        URL iconURL = getClass().getClassLoader().getResource("resources/matrix-icon.png");
+        ImageIcon icon = new ImageIcon(iconURL);
+        frame.setIconImage(icon.getImage());
+
         frame.pack();
         frame.setVisible(true);
     }
